@@ -23,7 +23,7 @@ public class WaveManager : GameMonoBehaviour
     [SerializeField]
     protected TypeSetUpWave typeSetUpWave;
     [SerializeField] protected List<RoomWave> _roomWave;
-    protected int curIndexRoom;
+    protected int curIndexRoom = 1;
     protected bool isSpawn;
 
     public State CurrentState => currentState;
@@ -247,6 +247,39 @@ public class WaveManager : GameMonoBehaviour
     protected virtual void ChangeWaveUsingPath()
     {
         isSpawn = true;
+        Debug.Log("curIndexRoom " + curIndexRoom);
+
+        if (curIndexRoom >= _roomWave.Count) return;
+
+        _paths = _roomWave[curIndexRoom].paths;
+
+        if (curIndexRoom - 1 < _roomWave.Count)
+            _roomWave[curIndexRoom - 1].gameObject.SetActive(false);
+        _roomWave[curIndexRoom].gameObject.SetActive(true);
+
+        distanceTravelled.Clear();
+        isFollowPathDone.Clear();
+
+        for (int i = 0; i < _spawnedUnits.Count; i++)
+        {
+            var unit = _spawnedUnits[i];
+            var path = _paths[i % _paths.Count]; 
+            distanceTravelled.Add(0);
+            isFollowPathDone.Add(false);
+            StartCoroutine(MoveOnPath(unit, path));
+        }
+
+        // Reset trạng thái
+        isWaveSpawnComplete = true;
+        hasFormationCompleted = false;
+        curIndexRoom++;
+    }
+
+
+    /*[Button("Test")]
+    protected virtual void ChangeWaveUsingPath()
+    {
+        isSpawn = true;
         curIndexRoom++;
         Debug.Log("curIndexRoom "+ curIndexRoom);
         if (curIndexRoom > _roomWave.Count - 1) return;
@@ -254,14 +287,9 @@ public class WaveManager : GameMonoBehaviour
 
         _roomWave[curIndexRoom - 1].gameObject.SetActive(false);
         _roomWave[curIndexRoom].gameObject.SetActive(true);
-        for (int i = 0; i < _spawnedUnits.Count; i++)
-        {
-            isFollowPathDone[i] = false;
-        }
 
-        this.currentState = State.NotStarted;
-        StartCoroutine(this.StartSpawn());
-    }
+
+    }*/
 
     protected virtual void ChangeWave()
     {
