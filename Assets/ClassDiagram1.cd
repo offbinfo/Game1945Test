@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ability">
+    <Position X="13.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAGAAAABAAAAAIAAQgIAEAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\Ability.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="abilityProfile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AbilityController">
+    <Position X="15.75" Y="11.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BQAAARACAAIAAAAAAAAAAAAAAAaAAAAAoAAAACEAAFE=</HashCode>
+      <FileName>Assets\Scripts\Ability\AbilityController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="abilities" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PowerUpAbility" Collapsed="true">
+    <Position X="12.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\Auto\PowerupAbility\PowerUpAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShieldAbility">
+    <Position X="9" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAEAAAIACAAAAAAAAAAAQAQAYAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\Auto\ShieldAbility\ShieldAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireMissileAbility" Collapsed="true">
+    <Position X="12.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgggAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\Auto\FireMissileAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HealAbility" Collapsed="true">
+    <Position X="14.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAgAAAACAAAAAgIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\Auto\HealAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SustentiveAbility" Collapsed="true">
+    <Position X="10" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABCAAAAQAAQIMAAAAIAAAAAAAAAAAgIEgAAABoAAg=</HashCode>
+      <FileName>Assets\Scripts\Ability\Auto\SustentiveAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbilityProfileSO">
+    <Position X="10.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\ScriptableObjects\AbilityProfileSO.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="abilityCode" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="AbilityCode">
+    <Position X="8.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABEAEAAACAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ability\AbilityCode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
