@@ -96,6 +96,8 @@ public class FormationWaveManager : WaveManager
             case TypeSetUpWave.ChangeWaveUsingPath:
                 FormationWave();
                 break;
+            case TypeSetUpWave.PathToPath:
+                break;
         }
     }
 

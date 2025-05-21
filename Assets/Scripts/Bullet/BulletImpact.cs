@@ -45,7 +45,7 @@ public class BulletImpact : BulletAbstract
         {
             this.bulletController.BulletDamageSender.HitPos = collision.ClosestPoint(transform.position);
             this.bulletController.BulletDamageSender.Send(collision.transform, isDestroyOnImpact);
-            AudioManager.Instance.PlaySFX("Hit");
+            //AudioManager.Instance.PlaySFX("Hit");
         }
     }
 }

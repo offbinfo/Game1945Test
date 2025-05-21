@@ -64,7 +64,7 @@ public class GameManager : GameMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        AudioManager.Instance.PlayMusic("GamePlay");
+        //AudioManager.Instance.PlayMusic("GamePlay");
         StartCoroutine(this.LoadStartUp());
     }
 
@@ -166,7 +166,7 @@ public class GameManager : GameMonoBehaviour
                 coint += 50;
             }
         }
-        AudioManager.Instance.PlaySFX("Win");
+        //AudioManager.Instance.PlaySFX("Win");
         DataLoaderAndSaver.Instance.PlayerData.coint += coint;
         DataLoaderAndSaver.Instance.PlayerData.process = DataLoaderAndSaver.Instance.PlayerData.process <= DataLoaderAndSaver.Instance.CurrentLevel ? DataLoaderAndSaver.Instance.CurrentLevel + 1 : DataLoaderAndSaver.Instance.PlayerData.process;
         DataLoaderAndSaver.Instance.SaveData();
@@ -175,7 +175,7 @@ public class GameManager : GameMonoBehaviour
     public void LevelOver()
     {
         MenuManager.Instance.SwitchCanvas(Menu.GAME_OVER);
-        AudioManager.Instance.PlaySFX("Lose");
+        //AudioManager.Instance.PlaySFX("Lose");
         DataLoaderAndSaver.Instance.PlayerData.coint += coint;
         DataLoaderAndSaver.Instance.SaveData();
     }

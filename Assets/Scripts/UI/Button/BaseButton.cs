@@ -35,6 +35,6 @@ public class BaseButton : GameMonoBehaviour
 
     protected virtual void OnClick()
     {
-        AudioManager.Instance.PlaySFX("Click");
+        //AudioManager.Instance.PlaySFX("Click");
     }
 }

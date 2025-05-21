@@ -90,7 +90,7 @@ public class LaserBeam
             DamageReceiver damageReceiver = raycast.collider.GetComponent<DamageReceiver>();
             damageSender.HitPos = raycast.point;
             damageSender.Send(damageReceiver.transform.parent);
-            AudioManager.Instance.PlaySFX("Laser");
+            //AudioManager.Instance.PlaySFX("Laser");
             UpdateLaser();
         }
         else

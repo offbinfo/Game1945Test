@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,60 +116,32 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_0
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 1020
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39cf0d3e71d34e74aa3e374d6cb7d459
-      internalID: 297557124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_1
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 1008
-        width: 42
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 77948188db754414bbb2c479fa078284
-      internalID: 1270508910
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 522
+        width: 530
         height: 1005
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -183,31 +160,10 @@ TextureImporter:
       name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_3
       rect:
         serializedVersion: 2
-        x: 523
+        x: 530
         y: 0
-        width: 419
-        height: 1002
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 9, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0235de2bc2372ad46a9ff0dbc04cfe88
-      internalID: -1696552578
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_4
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 859
-        width: 48
-        height: 41
+        width: 409
+        height: 1005
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +171,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f7cf8626435be84c8ef2981cc2256a0
-      internalID: 1379171698
+      spriteID: 0235de2bc2372ad46a9ff0dbc04cfe88
+      internalID: -1696552578
       vertices: []
       indices: 
       edges: []
@@ -242,6 +198,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_6
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 0
+        width: 411
+        height: 1004
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5192d20686f57449bed58aea3dcc7f0
+      internalID: -1137391259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_7
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 0
+        width: 378
+        height: 1005
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea7f1d026a10c8e4187c798a7bae341f
+      internalID: -87288246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -259,9 +257,10 @@ TextureImporter:
       sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_3: -1696552578
       sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_4: 1379171698
       sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_5: -177306222
-  spritePackingTag: 
+      sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_6: -1137391259
+      sactx-0-2048x1024-Crunch-SA_Decor_Chapter_2-6d44ff2c_7: -87288246
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

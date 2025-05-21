@@ -125,7 +125,7 @@ public class ShipShooting : ShipAbstract
                 if (newBullet == null) return;
                 this.SetDamage(newBullet);
                 newBullet.gameObject.SetActive(true);
-                AudioManager.Instance.PlaySFX(bulletSoundName);
+                //AudioManager.Instance.PlaySFX(bulletSoundName);
                 BulletController bulletController = newBullet.GetComponent<BulletController>();
                 bulletController.SetShooter(transform.parent);
             }

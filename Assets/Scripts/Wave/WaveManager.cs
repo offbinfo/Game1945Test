@@ -26,6 +26,9 @@ public class WaveManager : GameMonoBehaviour
     protected int curIndexRoom = 1;
     protected bool isSpawn;
 
+    [SerializeField] protected List<PathCreator> _pathWaves;
+    private int indexPath;
+
     public State CurrentState => currentState;
     public bool isWaveSpawnComplete = false;
     public bool isAllSpawnedUnitsDead = false;
@@ -275,7 +278,6 @@ public class WaveManager : GameMonoBehaviour
         curIndexRoom++;
     }
 
-
     /*[Button("Test")]
     protected virtual void ChangeWaveUsingPath()
     {
@@ -297,4 +299,47 @@ public class WaveManager : GameMonoBehaviour
         if (curIndexRoom > _roomWave.Count - 1) return;
         _paths = _roomWave[curIndexRoom].paths;
     }
+
+    [Button("Test Path To Path")]
+    protected virtual void ChangePathNew()
+    {
+        if (_pathWaves == null || _pathWaves.Count < indexPath + 2)
+        {
+            Debug.LogWarning("Không đủ path trong _pathWaves để thay thế.");
+            return;
+        }
+        indexPath += 2;
+
+        _paths.Clear();
+        _paths.Add(_pathWaves[indexPath]);
+        _paths.Add(_pathWaves[indexPath + 1]);
+
+        Debug.Log($"🔁 Thay path bằng path {indexPath} và {indexPath + 1}");
+
+        distanceTravelled.Clear();
+        isFollowPathDone.Clear();
+
+        StartCoroutine(MoveUnitsToNewPaths());
+
+        hasFormationCompleted = false;
+
+        isWaveSpawnComplete = true;
+    }
+
+    protected virtual IEnumerator MoveUnitsToNewPaths()
+    {
+        for (int i = 0; i < _spawnedUnits.Count; i++)
+        {
+            var unit = _spawnedUnits[i];
+            var path = _paths[i % _paths.Count]; 
+
+            distanceTravelled.Add(0f);
+            isFollowPathDone.Add(false);
+
+            StartCoroutine(MoveOnPath(unit, path));
+
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
 }

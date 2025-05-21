@@ -53,6 +53,6 @@ public class ItemLooter : ShipAbstract
         abilityCommand.Execute();
 
         itemPickupable.Picked();
-        AudioManager.Instance.PlaySFX("Pickup");
+        //AudioManager.Instance.PlaySFX("Pickup");
     }
 }

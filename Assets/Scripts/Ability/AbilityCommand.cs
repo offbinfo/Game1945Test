@@ -49,7 +49,7 @@ public class MissileCommand : AbilityCommand
     public void Execute()
     {
         abilityController.FireMissileAbility.Active();
-        AudioManager.Instance.PlaySFX("FireMissile");
+        //AudioManager.Instance.PlaySFX("FireMissile");
     }
 }
 

@@ -9,12 +9,12 @@ public class SFXButton : ToggleButton
     protected override void Start()
     {
         base.Start();
-        this.isOn = AudioManager.Instance.sfxSounds.Any(x => x.source.mute == false) == true;
+        //this.isOn = AudioManager.Instance.sfxSounds.Any(x => x.source.mute == false) == true;
     }
     protected override void OnClick()
     {
         base.OnClick();
-        AudioManager.Instance.ToggleSFX();
-        this.isOn = AudioManager.Instance.sfxSounds.Any(x => x.source.mute == false) == true;
+        //AudioManager.Instance.ToggleSFX();
+        //this.isOn = AudioManager.Instance.sfxSounds.Any(x => x.source.mute == false) == true;
     }
 }

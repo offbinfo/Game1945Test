@@ -8,6 +8,6 @@ public class BtnExit : BaseButton
     {
         base.OnClick();
         AsyncLevelLoader.Instance.LoadLevel("MenuScene");
-        AudioManager.Instance.PlayMusic("MenuMusic");
+        //AudioManager.Instance.PlayMusic("MenuMusic");
     }
 }

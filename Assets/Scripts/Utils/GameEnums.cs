@@ -7,4 +7,5 @@ public enum TypeSetUpWave
     Loop,
     ChangeWaveUsingPath,
     ChangeWave,
+    PathToPath
 }
