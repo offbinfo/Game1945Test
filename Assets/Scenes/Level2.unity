@@ -555,7 +555,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &143603093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8035,6 +8035,10 @@ PrefabInstance:
     - target: {fileID: 2649442191763479411, guid: 1b59ed9fc186a2147977a50b3b8ca83e, type: 3}
       propertyPath: m_Name
       value: Wave1_Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649442191763479411, guid: 1b59ed9fc186a2147977a50b3b8ca83e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,18 +1,11 @@
-﻿using PathCreation;
-using Sirenix.OdinInspector;
+using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
-
 [ExecuteInEditMode]
-public class FormationWaveManager : WaveManager
+public class RoomWave : WaveManager
 {
     [SerializeField] private FormationBase _formation;
     [SerializeField] private float _unitFormationSpeed = 2f;
@@ -88,7 +81,7 @@ public class FormationWaveManager : WaveManager
 
     protected void SetUpFormation()
     {
-        switch(typeSetUpWave)
+        switch (typeSetUpWave)
         {
             case TypeSetUpWave.Loop:
                 break;
@@ -185,9 +178,9 @@ public class FormationWaveManager : WaveManager
         this.isAllUnitInFormation = true;
     }
 
-    protected override void ChangeWaveUsingPath()
+/*    protected override void ChangeWaveUsingPath()
     {
-        this._formation = _roomWave[curIndexRoom].formation;
+        //this._formation = _roomWave[curIndexRoom].formation;
         this.isAllUnitInFormation = false;
 
         base.ChangeWaveUsingPath();
@@ -200,13 +193,13 @@ public class FormationWaveManager : WaveManager
         base.ChangeWave();
 
         StartCoroutine(DelayChangeWave());
-    }
+    }*/
 
     private IEnumerator DelayChangeWave()
     {
         yield return new WaitForSeconds(2f);
 
-        this._formation = _roomWave[curIndexRoom].formation;
+        //this._formation = _roomWave[curIndexRoom].formation;
 
         this.isAllUnitInFormation = false;
         FormationWave();
@@ -214,9 +207,9 @@ public class FormationWaveManager : WaveManager
         yield return new WaitForSeconds(5f);
 
         this.curIndexRoom++;
-        _paths = _roomWave[curIndexRoom].paths;
+/*        _paths = _roomWave[curIndexRoom].paths;
 
-        this._formation = _roomWave[curIndexRoom].formation;
+        this._formation = _roomWave[curIndexRoom].formation;*/
 
         this.isAllUnitInFormation = false;
         FormationWave();

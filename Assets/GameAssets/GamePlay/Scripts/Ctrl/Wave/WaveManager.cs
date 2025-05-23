@@ -15,35 +15,28 @@ public class WaveManager : GameMonoBehaviour
     public float StartDelay => startDelay;
     [SerializeField] protected List<PathCreator> _paths;
     [SerializeField] protected List<Transform> _spawnedUnits;
+    [SerializeField] protected List<SubRoom> _subRoom;
+
+    [Space]
     [SerializeField] protected State currentState;
-    [SerializeField] protected int amountOfUnit = 1;
+    public State CurrentState => currentState;
+
+    [Space]
     [SerializeField] protected string enemyName = "no-name";
     [SerializeField] private float _unitSpeed = 2f;
+
+    [Space]
     [Header("SetUp Formation")]
     [SerializeField]
     protected TypeSetUpWave typeSetUpWave;
-    [SerializeField] protected List<RoomWave> _roomWave;
     protected int curIndexRoom = 1;
-    protected bool isSpawn;
+    [SerializeField]
+    protected float delayChangeSetUp;
 
-    [SerializeField] protected List<PathCreator> _pathWaves;
-    private int indexPath;
-
-    public State CurrentState => currentState;
-    public bool isWaveSpawnComplete = false;
-    public bool isAllSpawnedUnitsDead = false;
-
-    [Button("Add Room Wave")]
-    public void AddRoomWave()
-    {
-        _roomWave.Clear();
-        _paths.Clear();
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            _roomWave.Add(transform.GetChild(i).GetComponent<RoomWave>());
-        }
-        _paths = _roomWave[0].paths;
-    }
+    protected bool isWaveSpawnComplete = false;
+    protected bool isAllSpawnedUnitsDead = false;
+    protected int amountOfUnit = 1;
+    //protected bool isSpawn;
 
     protected override void OnEnable()
     {
@@ -65,7 +58,6 @@ public class WaveManager : GameMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        //this.LoadPaths();
     }
     private void LoadPaths()
     {
@@ -77,7 +69,6 @@ public class WaveManager : GameMonoBehaviour
         }
         Debug.Log(transform.name + ": LoadPrefabs", gameObject);
     }
-
 
     protected virtual void CheckOnWaveCompleted()
     {
@@ -151,7 +142,7 @@ public class WaveManager : GameMonoBehaviour
     protected virtual bool SpawnEnemyInPath(PathCreator movePath)
     {
         Transform newEnemy;
-        if (isSpawn)
+        /*if (isSpawn)
         {
             newEnemy = _spawnedUnits[index];
             index++;
@@ -159,7 +150,7 @@ public class WaveManager : GameMonoBehaviour
         {
             Vector3 spawnPos = movePath.path.GetPoint(0);
             Quaternion enemyRot = Quaternion.Euler(0, 0, 0);
-            /*Transform*/ newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
+            *//*Transform*//* newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
             if (newEnemy == null) return false;
             if (!this._spawnedUnits.Contains(newEnemy))
             {
@@ -168,7 +159,19 @@ public class WaveManager : GameMonoBehaviour
                 this.isFollowPathDone.Add(false);
             }
             newEnemy.gameObject.SetActive(true);
+        }*/
+        Vector3 spawnPos = movePath.path.GetPoint(0);
+        Quaternion enemyRot = Quaternion.Euler(0, 0, 0);
+        /*Transform*/
+        newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
+        if (newEnemy == null) return false;
+        if (!this._spawnedUnits.Contains(newEnemy))
+        {
+            this._spawnedUnits.Add(newEnemy);
+            this.distanceTravelled.Add(0);
+            this.isFollowPathDone.Add(false);
         }
+        newEnemy.gameObject.SetActive(true);
 
         StartCoroutine(MoveOnPath(newEnemy, movePath));
         return true;
@@ -246,7 +249,7 @@ public class WaveManager : GameMonoBehaviour
         }
     }
 
-    [Button("Test")]
+/*    [Button("Test")]
     protected virtual void ChangeWaveUsingPath()
     {
         isSpawn = true;
@@ -254,7 +257,7 @@ public class WaveManager : GameMonoBehaviour
 
         if (curIndexRoom >= _roomWave.Count) return;
 
-        _paths = _roomWave[curIndexRoom].paths;
+        //_paths = _roomWave[curIndexRoom].paths;
 
         if (curIndexRoom - 1 < _roomWave.Count)
             _roomWave[curIndexRoom - 1].gameObject.SetActive(false);
@@ -266,7 +269,7 @@ public class WaveManager : GameMonoBehaviour
         for (int i = 0; i < _spawnedUnits.Count; i++)
         {
             var unit = _spawnedUnits[i];
-            var path = _paths[i % _paths.Count]; 
+            var path = _paths[i % _paths.Count];
             distanceTravelled.Add(0);
             isFollowPathDone.Add(false);
             StartCoroutine(MoveOnPath(unit, path));
@@ -278,12 +281,12 @@ public class WaveManager : GameMonoBehaviour
         curIndexRoom++;
     }
 
-    /*[Button("Test")]
+    [Button("Test")]
     protected virtual void ChangeWaveUsingPath()
     {
         isSpawn = true;
         curIndexRoom++;
-        Debug.Log("curIndexRoom "+ curIndexRoom);
+        Debug.Log("curIndexRoom " + curIndexRoom);
         if (curIndexRoom > _roomWave.Count - 1) return;
         _paths = _roomWave[curIndexRoom].paths;
 
@@ -291,13 +294,6 @@ public class WaveManager : GameMonoBehaviour
         _roomWave[curIndexRoom].gameObject.SetActive(true);
 
 
-    }*/
-
-    protected virtual void ChangeWave()
-    {
-        curIndexRoom++;
-        if (curIndexRoom > _roomWave.Count - 1) return;
-        _paths = _roomWave[curIndexRoom].paths;
     }
 
     [Button("Test Path To Path")]
@@ -324,7 +320,7 @@ public class WaveManager : GameMonoBehaviour
         hasFormationCompleted = false;
 
         isWaveSpawnComplete = true;
-    }
+    }*/
 
     protected virtual IEnumerator MoveUnitsToNewPaths()
     {

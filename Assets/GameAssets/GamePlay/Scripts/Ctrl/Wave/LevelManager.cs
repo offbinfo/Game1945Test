@@ -8,7 +8,7 @@ using UnityEngine;
 public class LevelManager : GameMonoBehaviour
 {
 
-    [SerializeField] private List<WaveManager> waves;
+    [SerializeField] private List<FormationWaveManager> waves;
     [SerializeField] private int currentWaveIndex = 0;
 
     private State currentState = State.NotStarted;
@@ -40,7 +40,7 @@ public class LevelManager : GameMonoBehaviour
         foreach (Transform wave in transform)
         {
             wave.gameObject.SetActive(false);
-            this.waves.Add(wave.transform.GetComponent<WaveManager>());
+            this.waves.Add(wave.transform.GetComponent<FormationWaveManager>());
         }
         Debug.Log(transform.name + ": LoadWaves", gameObject);
     }
@@ -54,10 +54,10 @@ public class LevelManager : GameMonoBehaviour
     {
         if (currentState != State.Started) return;
         /*if (waves[currentWaveIndex].CurrentState != State.Completed) return;*/
-        if (currentWaveIndex < waves.Count)
+        /*if (currentWaveIndex < waves.Count)
         {
             // Check if the current wave has been completed
-            if (waves[currentWaveIndex].CurrentState == State.Completed)
+            if (waves[currentWaveIndex].roomWaves[0].CurrentState == State.Completed)
             {
                 waves[currentWaveIndex].gameObject.SetActive(false);
                 currentWaveIndex++;
@@ -65,7 +65,7 @@ public class LevelManager : GameMonoBehaviour
                 {
                     waves[currentWaveIndex].gameObject.SetActive(true);
                     this.SetUpAndShowWaveNotification();
-                    waves[currentWaveIndex].StartWave();
+                    waves[currentWaveIndex].roomWaves[0].StartWave();
                 }
             }
         }
@@ -73,18 +73,27 @@ public class LevelManager : GameMonoBehaviour
         else if (currentState == State.Started && currentWaveIndex == waves.Count)
         {
             EndLevel();
-        }
+        }*/
     }
 
 
     public void StartLevel()
     {
+        /*if (currentState == State.NotStarted)
+        {
+            if (waves.Count <= 0) return;
+            waves[currentWaveIndex].gameObject.SetActive(true);
+            this.SetUpAndShowWaveNotification();
+            waves[currentWaveIndex].roomWaves[0].StartWave();
+            currentState = State.Started;
+        }*/
         if (currentState == State.NotStarted)
         {
             if (waves.Count <= 0) return;
             waves[currentWaveIndex].gameObject.SetActive(true);
             this.SetUpAndShowWaveNotification();
-            waves[currentWaveIndex].StartWave();
+            waves[currentWaveIndex].roomWaves[0].StartWave();
+            waves[currentWaveIndex].roomWaves[1].StartWave();
             currentState = State.Started;
         }
     }
