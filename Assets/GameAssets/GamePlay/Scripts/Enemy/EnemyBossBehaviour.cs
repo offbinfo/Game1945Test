@@ -28,6 +28,5 @@ public abstract class EnemyBossBehaviour : GameMonoBehaviour
     {
         if (this._enemyBossBehaviour != null) return;
         this._enemyBossBehaviour = transform.parent.GetComponent<EnemyBossBehaviourManager>();
-        Debug.Log(transform.name + ": LoadBehaviour", gameObject);
     }
 }

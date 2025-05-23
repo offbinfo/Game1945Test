@@ -1,4 +1,5 @@
-﻿using PathCreation;
+﻿using DG.Tweening;
+using PathCreation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -16,6 +17,7 @@ public class WaveManager : GameMonoBehaviour
     [SerializeField] protected List<PathCreator> _paths;
     [SerializeField] protected List<Transform> _spawnedUnits;
     [SerializeField] protected List<SubRoom> _subRoom;
+    [SerializeField] protected FormationBase _formation;
 
     [Space]
     [SerializeField] protected State currentState;
@@ -29,14 +31,19 @@ public class WaveManager : GameMonoBehaviour
     [Header("SetUp Formation")]
     [SerializeField]
     protected TypeSetUpWave typeSetUpWave;
-    protected int curIndexRoom = 1;
+    protected int curIndexRoom = 0;
     [SerializeField]
     protected float delayChangeSetUp;
+    protected List<float> distanceTravelled = new List<float>();
+    protected List<bool> isFollowPathDone = new List<bool>();
 
     protected bool isWaveSpawnComplete = false;
     protected bool isAllSpawnedUnitsDead = false;
     protected int amountOfUnit = 1;
-    //protected bool isSpawn;
+    protected bool isMovePath;
+    protected bool isAllUnitInFormation = false;
+    protected bool hasFormationCompleted = false;
+    private int indexUnit;
 
     protected override void OnEnable()
     {
@@ -89,9 +96,8 @@ public class WaveManager : GameMonoBehaviour
 
     protected virtual IEnumerator StartSpawn()
     {
-        yield return new WaitForSeconds(this.startDelay);
+        yield return null;
         StartCoroutine(this.SpawnEnemyRandom());
-
     }
 
     protected Dictionary<PathCreator, int> GetPathAndAmount(int posCount, int pathCount)
@@ -138,19 +144,19 @@ public class WaveManager : GameMonoBehaviour
         this.isWaveSpawnComplete = true;
     }
 
-    private int index;
     protected virtual bool SpawnEnemyInPath(PathCreator movePath)
     {
         Transform newEnemy;
-        /*if (isSpawn)
+        if (isMovePath)
         {
-            newEnemy = _spawnedUnits[index];
-            index++;
-        } else
+            newEnemy = _spawnedUnits[indexUnit];
+            indexUnit++;
+        }
+        else
         {
             Vector3 spawnPos = movePath.path.GetPoint(0);
             Quaternion enemyRot = Quaternion.Euler(0, 0, 0);
-            *//*Transform*//* newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
+            newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
             if (newEnemy == null) return false;
             if (!this._spawnedUnits.Contains(newEnemy))
             {
@@ -159,19 +165,19 @@ public class WaveManager : GameMonoBehaviour
                 this.isFollowPathDone.Add(false);
             }
             newEnemy.gameObject.SetActive(true);
-        }*/
-        Vector3 spawnPos = movePath.path.GetPoint(0);
-        Quaternion enemyRot = Quaternion.Euler(0, 0, 0);
-        /*Transform*/
-        newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
-        if (newEnemy == null) return false;
-        if (!this._spawnedUnits.Contains(newEnemy))
-        {
-            this._spawnedUnits.Add(newEnemy);
-            this.distanceTravelled.Add(0);
-            this.isFollowPathDone.Add(false);
         }
-        newEnemy.gameObject.SetActive(true);
+        /*        Vector3 spawnPos = movePath.path.GetPoint(0);
+                Quaternion enemyRot = Quaternion.Euler(0, 0, 0);
+                *//*Transform*//*
+                newEnemy = EnemySpawner.Instance.Spawn(enemyName, spawnPos, enemyRot);
+                if (newEnemy == null) return false;
+                if (!this._spawnedUnits.Contains(newEnemy))
+                {
+                    this._spawnedUnits.Add(newEnemy);
+                    this.distanceTravelled.Add(0);
+                    this.isFollowPathDone.Add(false);
+                }
+                newEnemy.gameObject.SetActive(true);*/
 
         StartCoroutine(MoveOnPath(newEnemy, movePath));
         return true;
@@ -198,15 +204,11 @@ public class WaveManager : GameMonoBehaviour
         }
     }
 
-    protected List<float> distanceTravelled = new List<float>();
-    protected List<bool> isFollowPathDone = new List<bool>();
     protected IEnumerator MoveOnPath(Transform unit, PathCreator path)
     {
         int index = _spawnedUnits.IndexOf(unit);
         if (index < 0 || index >= _spawnedUnits.Count)
-        {
             yield break;
-        }
 
         if (path.path.length <= 0)
         {
@@ -214,16 +216,37 @@ public class WaveManager : GameMonoBehaviour
             yield break;
         }
 
+        Vector3 startPoint = path.path.GetPoint(0);
+        yield return unit.DOMove(startPoint, 0.5f).SetEase(Ease.InOutSine).WaitForCompletion();
+
+/*        Vector3 nextPoint = path.path.GetPointAtDistance(0.1f);
+        Vector3 dir = (nextPoint - startPoint).normalized;
+        if (dir.sqrMagnitude > 0f)
+        {
+            float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            unit.eulerAngles = new Vector3(0, 0, angleZ);
+        }*/
+
+        distanceTravelled[index] = 0f;
+
         while (!isFollowPathDone[index])
         {
             distanceTravelled[index] += _unitSpeed * Time.deltaTime;
-            _spawnedUnits[index].position = path.path.GetPointAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
+            Vector3 pathPos = path.path.GetPointAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
+            unit.position = pathPos;
+
+/*            Vector3 forward = path.path.GetDirectionAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
+            if (forward.sqrMagnitude > 0f)
+            {
+                float angleZ = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+                unit.eulerAngles = new Vector3(0, 0, angleZ);
+            }*/
 
             if (distanceTravelled[index] >= path.path.length)
             {
                 if (typeSetUpWave == TypeSetUpWave.Loop)
                 {
-                    distanceTravelled[index] = 0f; // loop
+                    distanceTravelled[index] = 0f;
                 }
                 else
                 {
@@ -231,11 +254,10 @@ public class WaveManager : GameMonoBehaviour
                 }
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
     }
 
-    private bool hasFormationCompleted = false;
     protected virtual void CheckOnFormationCompleted()
     {
         if (!isWaveSpawnComplete) return;
@@ -245,97 +267,13 @@ public class WaveManager : GameMonoBehaviour
         if (isFollowPathDone.All(done => done))
         {
             hasFormationCompleted = true;
-            Debug.Log("✅ Tất cả enemy đã hoàn thành xếp đội hình!");
+
+            OnFormationCompleted();
         }
     }
 
-/*    [Button("Test")]
-    protected virtual void ChangeWaveUsingPath()
+    protected virtual void OnFormationCompleted()
     {
-        isSpawn = true;
-        Debug.Log("curIndexRoom " + curIndexRoom);
-
-        if (curIndexRoom >= _roomWave.Count) return;
-
-        //_paths = _roomWave[curIndexRoom].paths;
-
-        if (curIndexRoom - 1 < _roomWave.Count)
-            _roomWave[curIndexRoom - 1].gameObject.SetActive(false);
-        _roomWave[curIndexRoom].gameObject.SetActive(true);
-
-        distanceTravelled.Clear();
-        isFollowPathDone.Clear();
-
-        for (int i = 0; i < _spawnedUnits.Count; i++)
-        {
-            var unit = _spawnedUnits[i];
-            var path = _paths[i % _paths.Count];
-            distanceTravelled.Add(0);
-            isFollowPathDone.Add(false);
-            StartCoroutine(MoveOnPath(unit, path));
-        }
-
-        // Reset trạng thái
-        isWaveSpawnComplete = true;
-        hasFormationCompleted = false;
-        curIndexRoom++;
+        
     }
-
-    [Button("Test")]
-    protected virtual void ChangeWaveUsingPath()
-    {
-        isSpawn = true;
-        curIndexRoom++;
-        Debug.Log("curIndexRoom " + curIndexRoom);
-        if (curIndexRoom > _roomWave.Count - 1) return;
-        _paths = _roomWave[curIndexRoom].paths;
-
-        _roomWave[curIndexRoom - 1].gameObject.SetActive(false);
-        _roomWave[curIndexRoom].gameObject.SetActive(true);
-
-
-    }
-
-    [Button("Test Path To Path")]
-    protected virtual void ChangePathNew()
-    {
-        if (_pathWaves == null || _pathWaves.Count < indexPath + 2)
-        {
-            Debug.LogWarning("Không đủ path trong _pathWaves để thay thế.");
-            return;
-        }
-        indexPath += 2;
-
-        _paths.Clear();
-        _paths.Add(_pathWaves[indexPath]);
-        _paths.Add(_pathWaves[indexPath + 1]);
-
-        Debug.Log($"🔁 Thay path bằng path {indexPath} và {indexPath + 1}");
-
-        distanceTravelled.Clear();
-        isFollowPathDone.Clear();
-
-        StartCoroutine(MoveUnitsToNewPaths());
-
-        hasFormationCompleted = false;
-
-        isWaveSpawnComplete = true;
-    }*/
-
-    protected virtual IEnumerator MoveUnitsToNewPaths()
-    {
-        for (int i = 0; i < _spawnedUnits.Count; i++)
-        {
-            var unit = _spawnedUnits[i];
-            var path = _paths[i % _paths.Count]; 
-
-            distanceTravelled.Add(0f);
-            isFollowPathDone.Add(false);
-
-            StartCoroutine(MoveOnPath(unit, path));
-
-            yield return new WaitForSeconds(0.25f);
-        }
-    }
-
 }

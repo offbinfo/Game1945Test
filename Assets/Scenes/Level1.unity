@@ -1311,6 +1311,8 @@ MonoBehaviour:
   roomWaves:
   - {fileID: 1824260701}
   - {fileID: 1030442178}
+  executionMode: 0
+  delayStartWaveNext: 0
 --- !u!1 &308708831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2619,7 @@ Transform:
   m_GameObject: {fileID: 643439206}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.59, z: 0}
+  m_LocalPosition: {x: -1.64, y: 0.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3551,7 +3553,7 @@ Transform:
   m_GameObject: {fileID: 813478933}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.59, z: 0}
+  m_LocalPosition: {x: 0.8, y: -2.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4495,18 +4497,14 @@ MonoBehaviour:
   - {fileID: 734429288}
   - {fileID: 1144231006}
   _spawnedUnits: []
+  _subRoom: []
+  _formation: {fileID: 1705162078}
   currentState: 0
-  amountOfUnit: 13
   enemyName: no-name
   _unitSpeed: 2
   typeSetUpWave: 0
-  _subRoom: []
   delayChangeSetUp: 0
-  isWaveSpawnComplete: 0
-  isAllSpawnedUnitsDead: 0
-  _formation: {fileID: 1705162078}
   _unitFormationSpeed: 2
-  isAllUnitInFormation: 0
 --- !u!1 &1035887406
 GameObject:
   m_ObjectHideFlags: 0
@@ -5491,20 +5489,16 @@ MonoBehaviour:
   - {fileID: 98786190}
   - {fileID: 955061714}
   _spawnedUnits: []
-  currentState: 0
-  amountOfUnit: 13
-  enemyName: E1Scout
-  _unitSpeed: 2
-  typeSetUpWave: 2
   _subRoom:
   - {fileID: 1382184658}
   - {fileID: 643439208}
-  delayChangeSetUp: 2
-  isWaveSpawnComplete: 0
-  isAllSpawnedUnitsDead: 0
   _formation: {fileID: 41001181}
+  currentState: 0
+  enemyName: E1Scout
+  _unitSpeed: 2
+  typeSetUpWave: 3
+  delayChangeSetUp: 2
   _unitFormationSpeed: 2
-  isAllUnitInFormation: 0
 --- !u!1 &1322179055
 GameObject:
   m_ObjectHideFlags: 0
@@ -5553,7 +5547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - {fileID: 5073514655356435891}
-  currentWaveIndex: 0
 --- !u!1 &1328479928
 GameObject:
   m_ObjectHideFlags: 0
@@ -6473,20 +6466,16 @@ MonoBehaviour:
   - {fileID: 7036203482356437691}
   - {fileID: 529601373140055923}
   _spawnedUnits: []
-  currentState: 0
-  amountOfUnit: 16
-  enemyName: E1Scout
-  _unitSpeed: 2
-  typeSetUpWave: 2
   _subRoom:
   - {fileID: 1582240797}
   - {fileID: 813478935}
-  delayChangeSetUp: 2
-  isWaveSpawnComplete: 0
-  isAllSpawnedUnitsDead: 0
   _formation: {fileID: 5073514654922624436}
+  currentState: 0
+  enemyName: E1Scout
+  _unitSpeed: 2
+  typeSetUpWave: 3
+  delayChangeSetUp: 2
   _unitFormationSpeed: 2
-  isAllUnitInFormation: 0
 --- !u!1 &1646698852
 GameObject:
   m_ObjectHideFlags: 0
@@ -7277,19 +7266,15 @@ MonoBehaviour:
   - {fileID: 475660736}
   - {fileID: 573648573}
   _spawnedUnits: []
+  _subRoom:
+  - {fileID: 547856386}
+  _formation: {fileID: 189268774}
   currentState: 0
-  amountOfUnit: 13
   enemyName: no-name
   _unitSpeed: 2
   typeSetUpWave: 0
-  _subRoom:
-  - {fileID: 547856386}
   delayChangeSetUp: 0
-  isWaveSpawnComplete: 0
-  isAllSpawnedUnitsDead: 0
-  _formation: {fileID: 189268774}
   _unitFormationSpeed: 2
-  isAllUnitInFormation: 0
 --- !u!1 &1852072528
 GameObject:
   m_ObjectHideFlags: 0
@@ -10075,6 +10060,8 @@ MonoBehaviour:
   roomWaves:
   - {fileID: 1596116594}
   - {fileID: 1304590381}
+  executionMode: 1
+  delayStartWaveNext: 5
 --- !u!1 &5073514655356435893
 GameObject:
   m_ObjectHideFlags: 0

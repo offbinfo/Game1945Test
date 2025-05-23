@@ -9,7 +9,7 @@ public class LevelManager : GameMonoBehaviour
 {
 
     [SerializeField] private List<FormationWaveManager> waves;
-    [SerializeField] private int currentWaveIndex = 0;
+    private int currentWaveIndex = 0;
 
     private State currentState = State.NotStarted;
 
@@ -25,7 +25,7 @@ public class LevelManager : GameMonoBehaviour
     protected override void Awake()
     {
         base.Awake();
-        LevelManager.instance = this;
+        instance = this;
     }
 
     protected override void LoadComponents()
@@ -91,9 +91,7 @@ public class LevelManager : GameMonoBehaviour
         {
             if (waves.Count <= 0) return;
             waves[currentWaveIndex].gameObject.SetActive(true);
-            this.SetUpAndShowWaveNotification();
-            waves[currentWaveIndex].roomWaves[0].StartWave();
-            waves[currentWaveIndex].roomWaves[1].StartWave();
+            waves[currentWaveIndex].StartRoomWave();
             currentState = State.Started;
         }
     }
@@ -103,31 +101,11 @@ public class LevelManager : GameMonoBehaviour
         currentState = State.Completed;
         Debug.Log("End level");
     }
-    private void SetUpAndShowWaveNotification()
+/*    private void SetUpAndShowWaveNotification()
     {
         WaveNotification.Instance.SetMaxWave(waves.Count);
         WaveNotification.Instance.SetTimeShow(waves.Count);
         WaveNotification.Instance.SetCurrentWave(currentWaveIndex + 1);
         WaveNotification.Instance.ShowTextInTime();
-    }
-
-    /*    IEnumerator SpawnWave()
-        {
-            Wave currentWave = Waves[CurrentWaveIndex];
-
-            yield return new WaitForSeconds(1.0f);
-
-
-            while (GameObject.FindWithTag("Enemy") != null)
-            {
-                yield return null;
-            }
-
-            waveCompleted = true;
-            CurrentWaveIndex++;
-            if (CurrentWaveIndex >= Waves.Count)
-            {
-                CurrentWaveIndex = 0;
-            }
-        }*/
+    }*/
 }

@@ -7,15 +7,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class RoomWave : WaveManager
 {
-    [SerializeField] private FormationBase _formation;
     [SerializeField] private float _unitFormationSpeed = 2f;
     private List<Vector3> _formationPoints;
 
     private List<float> _unitOscillatesSpeeds = new List<float>();
     private float amplitudeOscillates = 0.03f;
-
-    public bool isAllUnitInFormation = false;
-
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -46,7 +42,7 @@ public class RoomWave : WaveManager
 
     protected override IEnumerator StartSpawn()
     {
-        yield return new WaitForSeconds(2f);
+        yield return null;
         this.SpawnEnemy();
     }
 
@@ -85,16 +81,19 @@ public class RoomWave : WaveManager
         {
             case TypeSetUpWave.Loop:
                 break;
+            case TypeSetUpWave.None:
             case TypeSetUpWave.ChangeWave:
             case TypeSetUpWave.ChangeWaveUsingPath:
                 FormationWave();
+                break;
+            default:
                 break;
             case TypeSetUpWave.PathToPath:
                 break;
         }
     }
 
-    private void FormationWave()
+    public void FormationWave()
     {
         if (this.isAllUnitInFormation) return;
         this.SetFormationPoints(this._formation.GetPositions().ToList());
@@ -178,40 +177,93 @@ public class RoomWave : WaveManager
         this.isAllUnitInFormation = true;
     }
 
-/*    protected override void ChangeWaveUsingPath()
+    // state change wave
+
+    protected override void OnFormationCompleted()
     {
-        //this._formation = _roomWave[curIndexRoom].formation;
-        this.isAllUnitInFormation = false;
-
-        base.ChangeWaveUsingPath();
-
-
+        base.OnFormationCompleted();
+        switch (typeSetUpWave)
+        {
+            case TypeSetUpWave.ChangeWave:
+                StartCoroutine(ChangeToFormation());
+                break;
+            case TypeSetUpWave.ChangeWaveUsingPath:
+                StartCoroutine(ChangeToNextWave());
+                break;
+            case TypeSetUpWave.PathToPath:
+                break;
+        }
     }
 
-    protected override void ChangeWave()
+    private IEnumerator ChangeToNextWave()
     {
-        base.ChangeWave();
+        isMovePath = true;
+        yield return new WaitForSeconds(delayChangeSetUp);
 
-        StartCoroutine(DelayChangeWave());
-    }*/
+        curIndexRoom++;
+        if (curIndexRoom >= _subRoom.Count)
+        {
+            Debug.Log("No more SubRooms. End of wave sequence.");
+            yield break;
+        }
 
-    private IEnumerator DelayChangeWave()
+        _subRoom[curIndexRoom - 1].gameObject.SetActive(false);
+        _subRoom[curIndexRoom].gameObject.SetActive(true);
+        SubRoom nextRoom = _subRoom[curIndexRoom];
+
+        _paths = nextRoom.paths;
+
+        this._formation = nextRoom.Formation;
+
+        isWaveSpawnComplete = false;
+        isAllSpawnedUnitsDead = false;
+        hasFormationCompleted = false;
+        isAllUnitInFormation = false;
+
+        for (int i = 0; i < _spawnedUnits.Count; i++)
+        {
+            distanceTravelled[i] = 0;
+            isFollowPathDone[i] = false;
+        }
+
+        this.currentState = State.NotStarted;
+        // Start next wave
+        StartWave();
+    }
+
+    private IEnumerator ChangeToFormation()
     {
-        yield return new WaitForSeconds(2f);
+        isMovePath = true;
+        yield return new WaitForSeconds(delayChangeSetUp);
 
-        //this._formation = _roomWave[curIndexRoom].formation;
+        curIndexRoom++;
+        if (curIndexRoom >= _subRoom.Count)
+        {
+            Debug.Log("No more SubRooms. End of wave sequence.");
+            yield break;
+        }
 
-        this.isAllUnitInFormation = false;
-        FormationWave();
+        _subRoom[curIndexRoom - 1].gameObject.SetActive(false);
+        _subRoom[curIndexRoom].gameObject.SetActive(true);
+        SubRoom nextRoom = _subRoom[curIndexRoom];
 
-        yield return new WaitForSeconds(5f);
+        _paths = nextRoom.paths;
 
-        this.curIndexRoom++;
-/*        _paths = _roomWave[curIndexRoom].paths;
+        this._formation = nextRoom.Formation;
 
-        this._formation = _roomWave[curIndexRoom].formation;*/
+        isWaveSpawnComplete = false;
+        isAllSpawnedUnitsDead = false;
+        hasFormationCompleted = false;
 
-        this.isAllUnitInFormation = false;
-        FormationWave();
+        isAllUnitInFormation = false;
+
+        for (int i = 0; i < _spawnedUnits.Count; i++)
+        {
+            //distanceTravelled[i] = 0;
+            isFollowPathDone[i] = false;
+        }
+
+        // Formation
+
     }
 }
