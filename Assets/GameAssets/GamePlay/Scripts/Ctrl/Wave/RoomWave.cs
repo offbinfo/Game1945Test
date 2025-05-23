@@ -243,27 +243,32 @@ public class RoomWave : WaveManager
             yield break;
         }
 
+        // Deactivate old and activate new subroom
         _subRoom[curIndexRoom - 1].gameObject.SetActive(false);
         _subRoom[curIndexRoom].gameObject.SetActive(true);
         SubRoom nextRoom = _subRoom[curIndexRoom];
 
+        // Update paths and formation reference
         _paths = nextRoom.paths;
-
         this._formation = nextRoom.Formation;
 
-        isWaveSpawnComplete = false;
-        isAllSpawnedUnitsDead = false;
+        // Reset state flags
+        isAllUnitInFormation = false;
+        isWaveSpawnComplete = true; // Enable formation positioning logic
         hasFormationCompleted = false;
 
-        isAllUnitInFormation = false;
-
+        // Reset movement tracking lists
         for (int i = 0; i < _spawnedUnits.Count; i++)
         {
-            //distanceTravelled[i] = 0;
-            isFollowPathDone[i] = false;
+            isFollowPathDone[i] = true; // Mark path as done so they can now move to formation
+            distanceTravelled[i] = 0;
         }
 
-        // Formation
+        // Update formation points
+        SetFormationPoints(this._formation.GetPositions().ToList());
 
+        Debug.Log("Changed to new formation: " + nextRoom.name);
     }
+
+
 }
