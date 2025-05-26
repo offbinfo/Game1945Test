@@ -1,4 +1,5 @@
-using PathCreation;
+﻿using PathCreation;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -191,6 +192,7 @@ public class RoomWave : WaveManager
                 StartCoroutine(ChangeToNextWave());
                 break;
             case TypeSetUpWave.PathToPath:
+                MoveToNewPath();
                 break;
         }
     }
@@ -270,5 +272,49 @@ public class RoomWave : WaveManager
         Debug.Log("Changed to new formation: " + nextRoom.name);
     }
 
+    [Button("Test")]
+    public void Test()
+    {
+        MoveToNewPath();
+    }
+
+    private void MoveToNewPath()
+    {
+        isMovePath = true;
+
+        DebugCustom.LogColor("MoveToNewPath");
+        curIndexRoom++;
+        if (curIndexRoom >= _subRoom.Count)
+        {
+            Debug.Log("No more SubRooms. End of wave sequence.");
+            return;
+        }
+
+        if (curIndexRoom == _subRoom.Count - 1)
+        {
+            isLastPath = true;
+        }
+
+        _subRoom[curIndexRoom - 1].gameObject.SetActive(false);
+        _subRoom[curIndexRoom].gameObject.SetActive(true);
+        SubRoom nextRoom = _subRoom[curIndexRoom];
+
+        _paths = nextRoom.paths;
+        _formation = nextRoom.Formation;
+
+        isWaveSpawnComplete = false;
+        isAllUnitInFormation = false;
+        isAllSpawnedUnitsDead = false;
+        hasFormationCompleted = false;
+
+        for (int i = 0; i < _spawnedUnits.Count; i++)
+        {
+            distanceTravelled[i] = 0;
+            isFollowPathDone[i] = false;
+        }
+
+        currentState = State.NotStarted;
+        StartWave();
+    }
 
 }

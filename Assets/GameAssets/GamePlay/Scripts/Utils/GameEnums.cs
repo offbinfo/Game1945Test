@@ -16,3 +16,9 @@ public enum ExecutionMode
     Simultaneous,   // Đồng thời
     Sequential,    // Tuần tự
 }
+
+public enum TypeWave
+{
+    Short,
+    Long,
+}

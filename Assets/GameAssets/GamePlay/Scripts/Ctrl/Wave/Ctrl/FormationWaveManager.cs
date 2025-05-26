@@ -20,6 +20,8 @@ public class FormationWaveManager : GameMonoBehaviour
     private ExecutionMode executionMode;
     [SerializeField]
     private float delayStartWaveNext;
+    [SerializeField]
+    private TypeWave typeWave;
 
     [Button("AsyncFormationWave")]
     public void AsyncFormationWave()

@@ -44,6 +44,7 @@ public class WaveManager : GameMonoBehaviour
     protected bool isAllUnitInFormation = false;
     protected bool hasFormationCompleted = false;
     private int indexUnit;
+    protected bool isLastPath;
 
     protected override void OnEnable()
     {
@@ -87,6 +88,7 @@ public class WaveManager : GameMonoBehaviour
 
     public virtual void StartWave()
     {
+        if (!gameObject.activeSelf) return;
         if (this.currentState == State.NotStarted)
         {
             this.currentState = State.Started;
@@ -244,7 +246,7 @@ public class WaveManager : GameMonoBehaviour
 
             if (distanceTravelled[index] >= path.path.length)
             {
-                if (typeSetUpWave == TypeSetUpWave.Loop)
+                if (isLastPath || typeSetUpWave == TypeSetUpWave.Loop)
                 {
                     distanceTravelled[index] = 0f;
                 }
@@ -276,4 +278,6 @@ public class WaveManager : GameMonoBehaviour
     {
         
     }
+
+
 }
