@@ -1,17 +1,13 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using PathCreation;
-using Sirenix.OdinInspector;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-
-
-public class WaveManager : GameMonoBehaviour
+public class WaveLongManager : GameMonoBehaviour
 {
+
     [SerializeField] protected float startDelay = 2f;
     public float StartDelay => startDelay;
     [SerializeField] protected List<PathCreator> _paths;
@@ -204,13 +200,13 @@ public class WaveManager : GameMonoBehaviour
         Vector3 startPoint = path.path.GetPoint(0);
         yield return unit.DOMove(startPoint, 0.5f).SetEase(Ease.InOutSine).WaitForCompletion();
 
-/*        Vector3 nextPoint = path.path.GetPointAtDistance(0.1f);
-        Vector3 dir = (nextPoint - startPoint).normalized;
-        if (dir.sqrMagnitude > 0f)
-        {
-            float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            unit.eulerAngles = new Vector3(0, 0, angleZ);
-        }*/
+        /*        Vector3 nextPoint = path.path.GetPointAtDistance(0.1f);
+                Vector3 dir = (nextPoint - startPoint).normalized;
+                if (dir.sqrMagnitude > 0f)
+                {
+                    float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    unit.eulerAngles = new Vector3(0, 0, angleZ);
+                }*/
 
         distanceTravelled[index] = 0f;
 
@@ -220,12 +216,12 @@ public class WaveManager : GameMonoBehaviour
             Vector3 pathPos = path.path.GetPointAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
             unit.position = pathPos;
 
-/*            Vector3 forward = path.path.GetDirectionAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
-            if (forward.sqrMagnitude > 0f)
-            {
-                float angleZ = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
-                unit.eulerAngles = new Vector3(0, 0, angleZ);
-            }*/
+            /*            Vector3 forward = path.path.GetDirectionAtDistance(distanceTravelled[index], EndOfPathInstruction.Loop);
+                        if (forward.sqrMagnitude > 0f)
+                        {
+                            float angleZ = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+                            unit.eulerAngles = new Vector3(0, 0, angleZ);
+                        }*/
 
             if (distanceTravelled[index] >= path.path.length)
             {
@@ -259,8 +255,6 @@ public class WaveManager : GameMonoBehaviour
 
     protected virtual void OnFormationCompleted()
     {
-        
+
     }
-
-
 }

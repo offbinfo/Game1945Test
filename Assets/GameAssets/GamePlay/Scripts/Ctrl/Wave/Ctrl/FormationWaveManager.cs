@@ -11,11 +11,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-[ExecuteInEditMode]
 public class FormationWaveManager : GameMonoBehaviour
 {
 
-    public List<RoomWave> roomWaves;
+    public List<RoomShort> roomShorts;
+    public List<RoomLong> roomLongs;
+
     [SerializeField]
     private ExecutionMode executionMode;
     [SerializeField]
@@ -26,39 +27,74 @@ public class FormationWaveManager : GameMonoBehaviour
     [Button("AsyncFormationWave")]
     public void AsyncFormationWave()
     {
-        roomWaves.Clear();
+        roomShorts.Clear();
         for (int i = 0; i < transform.childCount; i++)
         {
-            roomWaves.Add(transform.GetChild(i).GetComponent<RoomWave>());
+            roomShorts.Add(transform.GetChild(i).GetComponent<RoomShort>());
+        }
+        roomLongs.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            roomLongs.Add(transform.GetChild(i).GetComponent<RoomLong>());
         }
     }
 
     public void StartRoomWave()
     {
-        switch (executionMode)
+        if(typeWave == TypeWave.Short)
         {
-            case ExecutionMode.Sequential:
-                StartCoroutine(DelayNextRoomWave());
-                break;
-            case ExecutionMode.Simultaneous:
-                foreach (RoomWave roomWave in roomWaves)
-                {
-                    roomWave.StartWave();
-                }
-                break;
-            default:
-                break;
+            switch (executionMode)
+            {
+                case ExecutionMode.Sequential:
+                    StartCoroutine(DelayNextRoomShortWave());
+                    break;
+                case ExecutionMode.Simultaneous:
+                    foreach (RoomShort roomWave in roomShorts)
+                    {
+                        roomWave.StartWave();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else
+        {
+            switch (executionMode)
+            {
+                case ExecutionMode.Sequential:
+                    StartCoroutine(DelayNextRoomLongWave());
+                    break;
+                case ExecutionMode.Simultaneous:
+                    foreach (RoomLong roomWave in roomLongs)
+                    {
+                        roomWave.StartWave();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    private IEnumerator DelayNextRoomWave()
+    private IEnumerator DelayNextRoomShortWave()
     {
-        for (int i = 0; i < roomWaves.Count; i++)
+        for (int i = 0; i < roomShorts.Count; i++)
         {
             if (i > 0)
                 yield return Yielders.Get(delayStartWaveNext);
 
-            roomWaves[i].StartWave();
+            roomShorts[i].StartWave();
+        }
+    }
+
+    private IEnumerator DelayNextRoomLongWave()
+    {
+        for (int i = 0; i < roomLongs.Count; i++)
+        {
+            if (i > 0)
+                yield return Yielders.Get(delayStartWaveNext);
+
+            roomLongs[i].StartWave();
         }
     }
 }

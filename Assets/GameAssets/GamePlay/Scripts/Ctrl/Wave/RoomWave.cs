@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class RoomWave : WaveManager
 {
     [SerializeField] private float _unitFormationSpeed = 2f;
